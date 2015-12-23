@@ -1,7 +1,7 @@
 import mimetypes as mimes
 import sys
 from pyqode.core import api, modes, panels
-from pyqode.rst.backend import server
+from pyqode.rst.backend import server, workers
 from pyqode.rst import modes as rstmodes
 
 
@@ -43,9 +43,11 @@ class RstCodeEdit(api.CodeEdit):
         self.modes.append(modes.IndenterMode())
         self.modes.append(modes.OccurrencesHighlighterMode())
         self.modes.append(modes.SmartBackSpaceMode())
+        self.modes.append(modes.CheckerMode(workers.linter))
 
         self.panels.append(panels.EncodingPanel(), api.Panel.Position.TOP)
         self.panels.append(panels.ReadOnlyPanel(), api.Panel.Position.TOP)
+        self.panels.append(panels.CheckerPanel())
 
     def setPlainText(self, txt, mime_type='', encoding=''):
         mime_type = self.mimetypes[0]

@@ -550,3 +550,9 @@ There should be six messages in the following, auto-generated
 section, "Docutils System Messages":
 
 .. section should be added by Docutils automatically
+
+
+Underline too short
+=========
+
+Test
