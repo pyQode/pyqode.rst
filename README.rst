@@ -16,4 +16,4 @@
 About
 -----
 
-Adds restructured text support to pyQode
+Adds reStructuredText support to pyQode
