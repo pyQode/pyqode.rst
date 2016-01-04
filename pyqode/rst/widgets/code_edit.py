@@ -64,5 +64,5 @@ class RstCodeEdit(api.CodeEdit):
         Return the content of the editor as an html text.
         """
         return docutils.core.publish_parts(
-            self.toPlainText(), writer_name='html',
+            self.toPlainText(), source_path=self.file.path, writer_name='html',
             settings_overrides={'output_encoding': 'unicode'})['html_body']
