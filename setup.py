@@ -40,7 +40,7 @@ setup(
     author_email='colin.duquesnoy@gmail.com',
     description=DESCRIPTION,
     long_description=readme(),
-    install_requires=['pyqode.core', 'restructuredtext_lint'],
+    install_requires=['pyqode.core', 'restructuredtext_lint', 'docutils'],
     cmdclass=cmdclass,
     classifiers=[
         'Development Status :: 1 - Planning',

@@ -1,3 +1,4 @@
+import docutils
 import mimetypes as mimes
 import sys
 from pyqode.core import api, modes, panels
@@ -57,3 +58,11 @@ class RstCodeEdit(api.CodeEdit):
             # syntax highlighter removed, e.g. file size > FileManager.limit
             pass
         super(RstCodeEdit, self).setPlainText(txt, mime_type, encoding)
+
+    def to_html(self):
+        """
+        Return the content of the editor as an html text.
+        """
+        return docutils.core.publish_parts(
+            self.toPlainText(), writer_name='html',
+            settings_overrides={'output_encoding': 'unicode'})['html_body']
