@@ -51,8 +51,10 @@ class RstSH(BaseSH):
         super(RstSH, self).__init__(parent, color_scheme)
 
     def _check_formats(self):
-        # make sure italic/bold formats exist (the format map may be reset
-        # if user changed color scheme).
+        """
+        Make sure italic/bold formats exist (the format map may be reset
+        if user changed color scheme).
+        """
         base_fmt = self.formats['normal']
         try:
             self.formats['italic']
@@ -68,6 +70,12 @@ class RstSH(BaseSH):
             self.formats['bold'] = bold_fmt
 
     def highlight_block(self, text, block):
+        """
+        Highlight a block of text.
+
+        :param text: The text of the block to highlight
+        :param block: The QTextBlock to highlight
+        """
         self._check_formats()
         prev_block = block.previous()
         prev_state = TextBlockHelper.get_state(prev_block)
@@ -125,4 +133,7 @@ class RstSH(BaseSH):
         TextBlockHelper.set_state(block, state)
 
     def _rehighlight_block(self):
+        """
+        Perform a rehighlight of `_block_to_rehighlight`
+        """
         self.rehighlightBlock(self._block_to_rehighlight)
