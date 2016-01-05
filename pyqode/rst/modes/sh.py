@@ -2,7 +2,7 @@
 This module contains a native reStructuredText syntax highlighter.
 """
 import re
-from PyQt5 import QtGui
+from PyQt5 import QtCore, QtGui
 
 from pyqode.core.api import SyntaxHighlighter as BaseSH
 from pyqode.core.api import TextBlockHelper
@@ -81,15 +81,24 @@ class RstSH(BaseSH):
                     no_formats = False
                     start, end = match.span(key)
                     if key == 'tag' and len(set(text)) != 1:
-                        # 2 different characters -> not a header, probably a
-                        # table
-                        continue
-                    self.setFormat(start, end - start,
-                                   self.formats[key])
+                            # 2 different characters -> not a header,
+                            # probably a table
+                            continue
+                    self.setFormat(start, end - start, self.formats[key])
                     if key == 'comment':
                         state = self.INSIDE_COMMENT
                     if key == 'string' and not match.group(0).endswith('`'):
                         state = self.INSIDE_STRING
+                    # make sure to highlight previous block
+                    if key == 'tag':
+                        state = self.INSIDE_HEADER
+                        pblock = block.previous()
+                        if pblock.isValid() and pblock.text() and \
+                                prev_state != self.INSIDE_HEADER:
+                            self._block_to_rehighlight = pblock
+                            QtCore.QTimer.singleShot(
+                                1, self._rehighlight_block)
+
             match = self.PROG.search(text, match.end())
 
         if no_formats:
@@ -98,6 +107,7 @@ class RstSH(BaseSH):
             if nblock.isValid() and self.PROG_HEADER.match(nblock.text()) and \
                     len(set(nblock.text())) == 1:
                 self.setFormat(0, len(text), self.formats["tag"])
+                state = self.INSIDE_HEADER
             elif prev_state == self.INSIDE_COMMENT and (
                     indent > 0 or not len(text)):
                 self.setFormat(0, len(text), self.formats["comment"])
@@ -113,3 +123,6 @@ class RstSH(BaseSH):
                     end = len(text)
                 self.setFormat(0, end, self.formats["string"])
         TextBlockHelper.set_state(block, state)
+
+    def _rehighlight_block(self):
+        self.rehighlightBlock(self._block_to_rehighlight)
