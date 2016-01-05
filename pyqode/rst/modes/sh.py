@@ -20,7 +20,7 @@ def make_rst_patterns():
                                   '_?`[^`]+`_?'])
     types = any("type", [r':[^:\(\)]*:'])
     comment = any("comment", [r'^\.\.\s.*$'])
-    headers = any('tag', [r'^(=|\+|\*|-|`){3,}$'])
+    headers = any('tag', [r'^(=|\+|\*|-|#|~|`){3,}$'])
     bold = any('bold', [r'\*\*[^\*]+\*\*'])
     italic = any('italic', [r'\*[^\*]+\*'])
     string = any('string', [r'``[^`]+`*'])
