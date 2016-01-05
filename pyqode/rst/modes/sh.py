@@ -49,19 +49,29 @@ class RstSH(BaseSH):
 
     def __init__(self, parent, color_scheme=None):
         super(RstSH, self).__init__(parent, color_scheme)
-        fmt = self.formats['normal']
-        self.bold_fmt = QtGui.QTextCharFormat(fmt)
-        self.bold_fmt.setFontWeight(QtGui.QFont.Bold)
-        self.formats['bold'] = self.bold_fmt
-        self.italic_fmt = QtGui.QTextCharFormat(fmt)
-        self.italic_fmt.setFontItalic(True)
-        self.formats['italic'] = self.italic_fmt
+
+    def _check_formats(self):
+        # make sure italic/bold formats exist (the format map may be reset
+        # if user changed color scheme).
+        base_fmt = self.formats['normal']
+        try:
+            self.formats['italic']
+        except KeyError:
+            italic_fmt = QtGui.QTextCharFormat(base_fmt)
+            italic_fmt.setFontItalic(True)
+            self.formats['italic'] = italic_fmt
+        try:
+            self.formats['bold']
+        except KeyError:
+            bold_fmt = QtGui.QTextCharFormat(base_fmt)
+            bold_fmt.setFontWeight(QtGui.QFont.Bold)
+            self.formats['bold'] = bold_fmt
 
     def highlight_block(self, text, block):
+        self._check_formats()
         prev_block = block.previous()
         prev_state = TextBlockHelper.get_state(prev_block)
         self.setFormat(0, len(text), self.formats["normal"])
-
         no_formats = True
         match = self.PROG.search(text)
         state = self.NORMAL
