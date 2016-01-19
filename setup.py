@@ -5,7 +5,7 @@ Setup script for pyqode.json
 """
 import sys
 from setuptools import setup, find_packages
-from pyqode.json import __version__
+from pyqode.rst import __version__
 #
 # add ``build_ui command`` (optional, for development only)
 # this command requires the following packages:
