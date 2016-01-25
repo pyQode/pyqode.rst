@@ -1,5 +1,5 @@
 import logging
-from PyQt5 import QtWidgets
+from pyqode.qt import QtWidgets
 from pyqode.rst.widgets import RstCodeEdit
 from pyqode.core.widgets import HtmlPreviewWidget
 

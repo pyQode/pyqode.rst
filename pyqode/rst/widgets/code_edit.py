@@ -40,7 +40,7 @@ class RstCodeEdit(api.CodeEdit):
             self.document(), color_scheme=api.ColorScheme(color_scheme)))
         self.modes.append(modes.ZoomMode())
         cc = modes.CodeCompletionMode()
-        cc.trigger_symbols.clear()
+        cc.trigger_symbols[:] = []
         self.modes.append(cc)
         self.modes.append(modes.AutoIndentMode())
         self.modes.append(modes.IndenterMode())

@@ -2,8 +2,8 @@
 This module contains a native reStructuredText syntax highlighter.
 """
 import re
-from PyQt5 import QtCore, QtGui
 
+from pyqode.qt import QtCore, QtGui
 from pyqode.core.api import SyntaxHighlighter as BaseSH
 from pyqode.core.api import TextBlockHelper
 
