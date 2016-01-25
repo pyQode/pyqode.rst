@@ -13,6 +13,16 @@
 .. image:: https://img.shields.io/pypi/l/pyqode.rst.svg
 
 
+.. image:: https://travis-ci.org/pyQode/pyqode.rst.svg?branch=master
+   :target: https://travis-ci.org/pyQode/pyqode.rst
+   :alt: Travis-CI build status
+
+
+.. image:: https://coveralls.io/repos/pyQode/pyqode.rst/badge.svg?branch=master
+   :target: https://coveralls.io/r/pyQode/pyqode.rst?branch=master
+   :alt: Coverage Status
+
+
 About
 -----
 
